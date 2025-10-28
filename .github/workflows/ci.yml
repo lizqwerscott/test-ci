@@ -41,5 +41,15 @@ jobs:
         with:
           version: ${{ matrix.emacs-version }}
 
+      - name: test-path
+        run: pwd
+
+      - name: test-cent
+        run: |
+          export HOME="/home/runner/work/test-ci"; \
+          cp -f $HOME/test-ci/a.el $HOME/test-ci/a-b.el; \
+          ls -alh; \
+          emacs -Q --batch --eval "(setq byte-compile-error-on-warn t)" -f batch-byte-compile a-b.el
+
       - name: test-a
         run: emacs -Q --batch --eval "(setq byte-compile-error-on-warn t)" -f batch-byte-compile a.el
